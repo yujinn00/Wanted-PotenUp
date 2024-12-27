@@ -1,0 +1,67 @@
+# Visual Studio 파일
+.vs/
+.vscode/
+.idea/
+
+# 빌드 파일
+bin/
+Debug/
+Debug64/
+Release/
+Release64/
+x64/
+x86/
+
+# 사용자 설정 파일
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# .NET 파일 (C# 프로젝트 포함)
+# Bin and Obj directories
+bin/
+obj/
+
+# Windows Installer 파일
+*.cab
+*.msi
+*.msm
+*.msp
+
+# 패키지 캐시 (NuGet)
+.nuget/
+
+# Node.js 관련 파일 (if you use Node.js)
+node_modules/
+
+# 로그 파일
+*.log
+
+# 사용자 정의 빌드 아티팩트
+*.class
+*.exe
+*.dll
+*.pdb
+*.idb
+*.ilk
+*.opt
+
+# C++ 빌드 아티팩트
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+
+# CMake 아티팩트
+CMakeCache.txt
+CMakeFiles/
+CMakeSettings.json
+*.cmake
+
+# 기타 시스템 파일
+Thumbs.db
+ehthumbs.db
+.DS_Store
+

@@ -1,16 +1,13 @@
 #pragma once
 
-class Point;
+#include "Point.h"
 
-class Circle
+class Circle : public Point
 {
 public:
 	Circle(int x, int y, float radius);
-	~Circle();
-
 	void ShowData() const;
 
 private:
-	Point* point;
 	float radius;
 };

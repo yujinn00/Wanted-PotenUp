@@ -1,20 +1,15 @@
 #include "Circle.h"
-#include "Point.h"
 
 #include <iostream>
 
 Circle::Circle(int x, int y, float radius)
-	: point(new Point(x, y)), radius(radius)
-{
-}
-
-Circle::~Circle()
+	: Point(x, y), radius(radius)
 {
 }
 
 void Circle::ShowData() const
 {
-	std::cout << "Áß½É ÁÂÇ¥: (" << point->GetX() << ", " << point->GetY() << ")\n";
+	std::cout << "Áß½É ÁÂÇ¥: (" << x << ", " << y << ")\n";
 	std::cout << "¹ÝÁö¸§: " << radius << "\n";
 	std::cout << "¿øÀÇ ³ÐÀÌ: " << radius * radius * 3.141592f << "\n";
 }

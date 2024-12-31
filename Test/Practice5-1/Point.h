@@ -5,10 +5,7 @@ class Point
 public:
 	Point(int x, int y);
 
-	int GetX() const;
-	int GetY() const;
-
-private:
+protected:
 	int x;
 	int y;
 };

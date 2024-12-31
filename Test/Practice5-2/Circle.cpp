@@ -10,6 +10,7 @@ Circle::Circle(int x, int y, float radius)
 
 Circle::~Circle()
 {
+	delete point;
 }
 
 void Circle::ShowData() const

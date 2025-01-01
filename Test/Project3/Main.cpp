@@ -2,11 +2,13 @@
 
 #include <iostream>
 
-int main() {
+int main()
+{
     Bank bank;
-    char choice = ' ';
+    char option = ' ';
 
-    while (true) {
+    while (true)
+    {
         std::cout << "====== 은행 계좌 관리 프로그램 ======\n";
         std::cout << "1. 계좌 개설 (CreateAccount)\n";
         std::cout << "2. 입금 (Deposit)\n";
@@ -16,9 +18,9 @@ int main() {
         std::cout << "=====================================\n";
         std::cout << "메뉴를 선택하세요: ";
 
-        std::cin >> choice;
+        std::cin >> option;
 
-        switch (choice)
+        switch (option)
         {
         case '1':
         {
@@ -32,8 +34,14 @@ int main() {
             std::cout << "이름을 입력하세요: ";
             std::cin >> tmpName;
 
+            char accountOption = ' ';
+
+            std::cout << "(1: 일반 계좌, 2: 신용 계좌, 3: 기부 계좌)\n";
+            std::cout << "개설하실 계좌를 선택해주세요: ";
+            std::cin >> accountOption;
+
             const char* name = tmpName;
-            bank.CreateAccount(id, name, 0);
+            bank.CreateAccount(id, name, accountOption);
             break;
         }
 
@@ -51,6 +59,7 @@ int main() {
             bank.Deposit(id, money);
             break;
         }
+            
 
         case '3':
         {
@@ -69,24 +78,22 @@ int main() {
 
         case '4':
             system("cls");
-
             bank.Inquire();
             break;
 
         case 'Q':
             system("cls");
-
             std::cout << "프로그램이 종료되었습니다.\n";
             std::cout << "계속하려면 아무 키나 누르십시오 ..\n";
             std::cin.get();
-
             return 0;
 
         default:
             system("cls");
-
             std::cout << "유효하지 않은 값을 입력하셨습니다.\n";
             break;
         }
     }
+
+    return 0;
 }

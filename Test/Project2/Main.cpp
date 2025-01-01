@@ -21,6 +21,7 @@ int main() {
         switch (choice)
         {
         case '1':
+        {
             system("cls");
 
             int id;
@@ -34,8 +35,10 @@ int main() {
             const char* name = tmpName;
             bank.CreateAccount(id, name, 0);
             break;
+        }
 
         case '2':
+        {
             system("cls");
 
             int id, money;
@@ -47,8 +50,10 @@ int main() {
 
             bank.Deposit(id, money);
             break;
+        }
 
         case '3':
+        {
             system("cls");
 
             int id, money;
@@ -60,6 +65,7 @@ int main() {
 
             bank.Withdraw(id, money);
             break;
+        }
 
         case '4':
             system("cls");

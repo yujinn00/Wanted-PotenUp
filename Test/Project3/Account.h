@@ -11,7 +11,7 @@ public:
 	const char* GetName() const;
 	int GetBalance() const;
 
-	virtual void SetBalance(int balance);
+	virtual void SetBalance(int balance, char option);
 	virtual int GetDonation() const;
 
 protected:

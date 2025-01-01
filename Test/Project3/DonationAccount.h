@@ -7,7 +7,7 @@ class DonationAccount : public Account
 public:
 	DonationAccount(int id, const char* name, int balance, int total);
 
-	void SetBalance(int balance) override;
+	void SetBalance(int balance, char option) override;
 	int GetDonation() const override;
 
 private:

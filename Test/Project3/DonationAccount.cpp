@@ -7,11 +7,22 @@ DonationAccount::DonationAccount(int id, const char* name, int balance, int tota
 {
 }
 
-void DonationAccount::SetBalance(int balance)
+void DonationAccount::SetBalance(int balance, char option)
 {
-	int donation = balance / 100;
-	total += donation;
-	this->balance = balance - donation;
+	if (option == '+')
+	{
+		int donation = balance / 100;
+		total += donation;
+		this->balance = balance - donation;
+	}
+	else if (option == '-')
+	{
+		this->balance = balance;
+	}
+	else
+	{
+		std::cout << "유효하지 않은 값을 입력하셨습니다.\n";
+	}
 }
 
 int DonationAccount::GetDonation() const

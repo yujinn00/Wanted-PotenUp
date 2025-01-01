@@ -42,7 +42,7 @@ int Account::GetBalance() const
 	return balance;
 }
 
-void Account::SetBalance(int balance)
+void Account::SetBalance(int balance, char option)
 {
 	this->balance = balance;
 }

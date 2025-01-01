@@ -97,7 +97,7 @@ void Bank::Deposit(int id, int money)
 		{
 			if (account[i] != nullptr && account[i]->GetId() == id)
 			{
-				account[i]->SetBalance(account[i]->GetBalance() + money);
+				account[i]->SetBalance(account[i]->GetBalance() + money, '+');
 			}
 		}
 	}
@@ -140,7 +140,7 @@ void Bank::Withdraw(int id, int money)
 					return;
 				}
 
-				account[i]->SetBalance(account[i]->GetBalance() - money);
+				account[i]->SetBalance(account[i]->GetBalance() - money, '-');
 			}
 		}
 	}

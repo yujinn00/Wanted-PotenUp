@@ -26,9 +26,9 @@ int main()
 
 	std::cout << major << "\n";
 
-	String inputString;
-	getline(std::cin, inputString);
-	//std::cin.getline >> inputString;
+	//String inputString;
+	//getline(std::cin, inputString);
+	////std::cin.getline >> inputString;
 
-	std::cout << "입력된 값: " << inputString << "\n";
+	//std::cout << "입력된 값: " << inputString << "\n";
 }

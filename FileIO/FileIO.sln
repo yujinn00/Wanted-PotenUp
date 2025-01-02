@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileWrite", "FileWrite\FileWrite.vcxproj", "{CD187A66-8813-4EE0-8F75-F34070780F4C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileRead", "FileRead\FileRead.vcxproj", "{8F2601C4-D33D-4D91-8CE2-427883D1E28F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FSeek", "FSeek\FSeek.vcxproj", "{29CE6606-4D1D-4621-8D5F-C579898F36FB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Move", "Move\Move.vcxproj", "{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,22 @@ Global
 		{8F2601C4-D33D-4D91-8CE2-427883D1E28F}.Release|x64.Build.0 = Release|x64
 		{8F2601C4-D33D-4D91-8CE2-427883D1E28F}.Release|x86.ActiveCfg = Release|Win32
 		{8F2601C4-D33D-4D91-8CE2-427883D1E28F}.Release|x86.Build.0 = Release|Win32
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Debug|x64.ActiveCfg = Debug|x64
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Debug|x64.Build.0 = Debug|x64
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Debug|x86.ActiveCfg = Debug|Win32
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Debug|x86.Build.0 = Debug|Win32
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Release|x64.ActiveCfg = Release|x64
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Release|x64.Build.0 = Release|x64
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Release|x86.ActiveCfg = Release|Win32
+		{29CE6606-4D1D-4621-8D5F-C579898F36FB}.Release|x86.Build.0 = Release|Win32
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Debug|x64.ActiveCfg = Debug|x64
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Debug|x64.Build.0 = Debug|x64
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Debug|x86.ActiveCfg = Debug|Win32
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Debug|x86.Build.0 = Debug|Win32
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Release|x64.ActiveCfg = Release|x64
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Release|x64.Build.0 = Release|x64
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Release|x86.ActiveCfg = Release|Win32
+		{C7BE8573-F2D9-4A79-8347-26A9D1D3CF3F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

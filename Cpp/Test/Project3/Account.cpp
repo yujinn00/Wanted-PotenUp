@@ -44,7 +44,18 @@ int Account::GetBalance() const
 
 void Account::SetBalance(int balance, char option)
 {
-	this->balance = balance;
+	if (option == '+')
+	{
+		this->balance += balance;
+	}
+	else if (option == '-')
+	{
+		this->balance -= balance;
+	}
+	else
+	{
+		std::cout << "유효하지 않은 값입니다.\n";
+	}
 }
 
 int Account::GetDonation() const

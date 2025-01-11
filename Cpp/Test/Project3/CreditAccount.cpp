@@ -11,14 +11,14 @@ void CreditAccount::SetBalance(int balance, char option)
 {
 	if (option == '+')
 	{
-		this->balance = balance + (balance / 100);
+		this->balance += balance + (balance / 100);
 	}
 	else if (option == '-')
 	{
-		this->balance = balance;
+		this->balance -= balance;
 	}
 	else
 	{
-		std::cout << "유효하지 않은 값을 입력하셨습니다.\n";
+		std::cout << "유효하지 않은 값입니다.\n";
 	}
 }

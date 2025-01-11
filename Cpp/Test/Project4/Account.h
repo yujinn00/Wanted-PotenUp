@@ -1,0 +1,22 @@
+#pragma once
+
+class Account
+{
+public:
+	Account(int id, const char* name, int balance);
+	Account(const Account& account);
+	virtual ~Account();
+
+	int GetId() const;
+	const char* GetName() const;
+	int GetBalance() const;
+
+	virtual void SetBalance(int balance, char option);
+	virtual int GetDonation() const;
+	virtual const char* GetType() const;
+
+protected:
+	int id;
+	char* name;
+	int balance;
+};

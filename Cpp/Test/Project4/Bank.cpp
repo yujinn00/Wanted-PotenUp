@@ -1,0 +1,238 @@
+#include "Bank.h"
+#include "Account.h"
+#include "CreditAccount.h"
+#include "DonationAccount.h"
+
+#include <iostream>
+#include <fstream>
+
+Bank::Bank()
+	: count(0)
+{
+	for (int i = 0; i < 100; ++i)
+	{
+		account[i] = nullptr;
+	}
+
+	LoadFile("data.txt");
+}
+
+Bank::~Bank()
+{
+	SaveFile("data.txt");
+
+	for (int i = 0; i < 100; ++i)
+	{
+		if (account[i] != nullptr)
+		{
+			delete account[i];
+			account[i] = nullptr;
+		}
+	}
+}
+
+void Bank::SaveFile(const std::string& file) const
+{
+	std::ofstream fout(file, std::ios::out);
+
+	if (!fout.is_open())
+	{
+		std::cerr << "파일 열기 실패\n";
+		return;
+	}
+
+	for (int i = 0; i < 100; ++i)
+	{
+		if (account[i])
+		{
+			fout << account[i]->GetType() << " | ID: " << account[i]->GetId() << " | Name: " << account[i]->GetName() << " | Balance: " << account[i]->GetBalance() << " | Donation: " << account[i]->GetDonation() << "\n";
+		}
+	}
+
+	fout.close();
+}
+
+void Bank::LoadFile(const std::string& file)
+{
+	std::ifstream fin(file, std::ios::in);
+
+	if (!fin.is_open())
+	{
+		std::cout << "파일 열기 실패\n";
+		return;
+	}
+
+	char type[100], name[100], delimiter, label[100];
+	int id, balance, donation;
+	
+	while (fin >> type >> delimiter >> label >> id >> delimiter >> label >> name >> delimiter >> label >> balance >> delimiter >> label >> donation)
+	{
+		if (strcmp(type, "Account") == 0)
+		{
+			account[id] = new Account(id, name, balance);
+		}
+		else if (strcmp(type, "CreditAccount") == 0)
+		{
+			account[id] = new CreditAccount(id, name, balance);
+		}
+		else if (strcmp(type, "DonationAccount") == 0)
+		{
+			account[id] = new DonationAccount(id, name, balance, donation);
+		}
+		else
+		{
+			system("cls"); 
+			std::cout << "유효하지 않은 값입니다.\n";
+			return;
+		}
+	}
+
+	fin.close();
+}
+
+void Bank::CreateAccount(int id, const char* name, char option)
+{
+	if (count > 100)
+	{
+		std::cout << "계좌를 더 이상 개설할 수 없습니다.\n\n";
+		return;
+	}
+
+	if (id < 0 || id >= 100)
+	{
+		std::cout << "계좌 번호는 0에서 99 사이의 값이어야 합니다.\n\n";
+		return;
+	}
+
+	for (int i = 0; i < 100; ++i)
+	{
+		if (account[i] != nullptr && account[i]->GetId() == id)
+		{
+			std::cout << "중복된 계좌 번호입니다.\n\n";
+			return;
+		}
+	}
+
+	switch (option)
+	{
+	case '1':
+		account[id] = new Account(id, name, 0);
+		std::cout << "\n";
+		break;
+
+	case '2':
+		account[id] = new CreditAccount(id, name, 0);
+		std::cout << "\n";
+		break;
+
+	case '3':
+		account[id] = new DonationAccount(id, name, 0, 0);
+		std::cout << "\n";
+		break;
+
+	default:
+		system("cls");
+		std::cout << "유효하지 않은 값을 입력하셨습니다.\n";
+		return;
+	}
+}
+
+void Bank::Deposit(int id, int money)
+{
+	bool isAccount = false;
+
+	for (int i = 0; i < 100; ++i)
+	{
+		if (account[i] != nullptr && account[i]->GetId() == id)
+		{
+			isAccount = true;
+		}
+	}
+
+	if (!isAccount)
+	{
+		std::cout << "존재하지 않는 계좌 번호입니다.\n\n";
+		return;
+	}
+
+	if (money > 0)
+	{
+		for (int i = 0; i < 100; ++i)
+		{
+			if (account[i] != nullptr && account[i]->GetId() == id)
+			{
+				account[i]->SetBalance(money, '+');
+			}
+		}
+	}
+	else
+	{
+		std::cout << "유효하지 않은 금액입니다.\n\n";
+		return;
+	}
+	
+	std::cout << "\n";
+}
+
+void Bank::Withdraw(int id, int money)
+{
+	bool isAccount = false;
+
+	for (int i = 0; i < 100; ++i)
+	{
+		if (account[i] != nullptr && account[i]->GetId() == id)
+		{
+			isAccount = true;
+		}
+	}
+
+	if (!isAccount)
+	{
+		std::cout << "존재하지 않는 계좌 번호입니다.\n\n";
+		return;
+	}
+
+	if (money > 0)
+	{
+		for (int i = 0; i < 100; ++i)
+		{
+			if (account[i] != nullptr && account[i]->GetId() == id)
+			{
+				if (account[i]->GetBalance() < money)
+				{
+					std::cout << "잔액이 부족합니다.\n\n";
+					return;
+				}
+
+				account[i]->SetBalance(money, '-');
+			}
+		}
+	}
+	else
+	{
+		std::cout << "유효하지 않은 금액입니다.\n\n";
+		return;
+	}
+
+	std::cout << "\n";
+}
+
+void Bank::Inquire() const
+{
+	for (int i = 0; i < 100; ++i)
+	{
+		if (account[i])
+		{
+			std::cout << "계좌 번호: " << account[i]->GetId() << "\n";
+			std::cout << "이     름: " << account[i]->GetName() << "\n";
+			std::cout << "잔     액: " << account[i]->GetBalance() << "\n";
+
+			if (account[i]->GetDonation() > 0)
+			{
+				std::cout << "기부 금액: " << account[i]->GetDonation() << "\n";
+			}
+
+			std::cout << "\n";
+		}
+	}
+}

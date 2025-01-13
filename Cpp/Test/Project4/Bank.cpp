@@ -31,7 +31,7 @@ Bank::~Bank()
 	}
 }
 
-void Bank::SaveFile(const std::string& file) const
+void Bank::SaveFile(const char* file) const
 {
 	std::ofstream fout(file, std::ios::out);
 
@@ -52,7 +52,7 @@ void Bank::SaveFile(const std::string& file) const
 	fout.close();
 }
 
-void Bank::LoadFile(const std::string& file)
+void Bank::LoadFile(const char* file)
 {
 	std::ifstream fin(file, std::ios::in);
 

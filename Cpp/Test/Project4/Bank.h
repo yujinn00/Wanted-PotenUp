@@ -15,8 +15,8 @@ public:
 	void Withdraw(int id, int money);
 	void Inquire() const;
 	
-	void SaveFile(const std::string& file) const;
-	void LoadFile(const std::string& file);
+	void SaveFile(const char* file) const;
+	void LoadFile(const char* file);
 
 private:
 	Account* account[100];

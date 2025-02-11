@@ -6,6 +6,8 @@
 #include "Ladder.h"
 #include "Hose.h"
 
+// 전방 선언 (헤더 순환 참조 금지 + 컴파일 속도 개선)
+class FirefighterBase;
 class Firetruck
 {
 public:
@@ -34,11 +36,11 @@ public:
 	const Hose* GetHose() const { return hose; }
 	void SetHose(Hose* hose) { this->hose = hose; }
 
-	class Firefighter* GetDriver() const { return driver; }
-	void SetDriver(class Firefighter* driver) { this->driver = driver; }
+	FirefighterBase* GetDriver() const { return driver; }
+	void SetDriver(FirefighterBase* driver) { this->driver = driver; }
 
 private:
-	class Firefighter* driver = nullptr;
+	FirefighterBase* driver = nullptr;
 	Ladder* ladder = nullptr;
 	Hose* hose = nullptr;
 };

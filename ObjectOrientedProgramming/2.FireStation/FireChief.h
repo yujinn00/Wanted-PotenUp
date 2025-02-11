@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Firefighter.h"
+#include "FirefighterBase.h"
 
-class FireChief : public Firefighter
+class FireChief : public FirefighterBase
 {
 public:
-	FireChief(const std::string& name, Firefighter* numberOne = nullptr)
-		: Firefighter(name), numberOne(numberOne)
+	FireChief(const std::string& name, FirefighterBase* numberOne = nullptr)
+		: FirefighterBase(name), numberOne(numberOne)
 	{
 	}
 
 	// 불 끄기 위임 함수
-	void TellFirefighterToExtinguishFire(Firefighter* colleague)
+	void TellFirefighterToExtinguishFire(FirefighterBase* colleague)
 	{
 		colleague->ExtinguishFire();
 	}
@@ -27,9 +27,9 @@ public:
 		TellFirefighterToExtinguishFire(numberOne);
 	}
 
-	Firefighter* GetNumberOne() const { return numberOne; }
-	void SetNumberOne(Firefighter* numberOne) { this->numberOne = numberOne; }
+	FirefighterBase* GetNumberOne() const { return numberOne; }
+	void SetNumberOne(FirefighterBase* numberOne) { this->numberOne = numberOne; }
 
 private:
-	Firefighter* numberOne = nullptr;
+	FirefighterBase* numberOne = nullptr;
 };

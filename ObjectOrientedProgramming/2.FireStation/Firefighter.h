@@ -1,11 +1,8 @@
 #pragma once
 
-#include "Firetruck.h"
+#include "FirefighterBase.h"
 
-#include <iostream>
-#include <string>
-
-class Firefighter
+class Firefighter : public FirefighterBase
 {
 public:
 	/*
@@ -19,35 +16,30 @@ public:
 	소멸자도 가상으로 선언해야 함
 	*/
 	Firefighter(const std::string& name)
-		: name(name)
+		: FirefighterBase(name)
 	{
 	}
 
 	virtual ~Firefighter() = default;
 
-	// 불 끄기 (ExtinguishFire)
+	// 불 끄기
 	virtual void ExtinguishFire()
 	{
 		std::cout << name << " 소방관이 불을 끄고 있습니다.\n";
+		TrainHoseOnFire();
+		TurnOnHose();
 	}
 
-	// 운전 (Drive)
-	void Drive(Firetruck* truckToDrive, const class Point& position)
+protected:
+	// 호스 켜기
+	virtual void TurnOnHose()
 	{
-		// 운전자 확인
-		if (truckToDrive->GetDriver() != this)
-		{
-			return;
-		}
-
-		// 이동
-		truckToDrive->Drive(position);
+		std::cout << "불이 꺼지고 있습니다.\n";
 	}
 
-	// 게터 및 세터
-	const std::string GetName() const { return name; }
-	void SetName(const std::string& name) { this->name = name; }
-
-private:
-	std::string name;
+	// 호스 조준
+	virtual void TrainHoseOnFire()
+	{
+		std::cout << "호스를 불이 발생한 곳에 겨냥하고 있습니다.\n";
+	}
 };

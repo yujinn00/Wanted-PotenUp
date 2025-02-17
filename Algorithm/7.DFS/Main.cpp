@@ -172,7 +172,7 @@ bool ParseMap(const char* path)
 int main()
 {
 	// ¹Ì·Î Å½»ö
-	if (ParseMap("../Assets/Map.txt"))
+	if (ParseMap("../Assets/Map1.txt"))
 	{
 		EscapeMaze();
 	}

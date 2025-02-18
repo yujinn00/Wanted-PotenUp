@@ -24,7 +24,8 @@ RedBlackTree::RedBlackTree()
 
 RedBlackTree::~RedBlackTree()
 {
-	// @Todo: 모든 노드 삭제
+	DestroyRecursive(root);
+	delete nil;
 }
 
 bool RedBlackTree::Find(int data, Node** outNode)
@@ -37,20 +38,6 @@ bool RedBlackTree::Find(int data, Node** outNode)
 
 	// 재귀적으로 검색 진행
 	return FindRecursive(root, outNode, data);
-}
-
-bool RedBlackTree::Insert(int data)
-{
-	// 먼저 중복되는 데이터가 있는지 확인
-	Node* node = nullptr;
-	if (Find(data, &node))
-	{
-		std::cout << "에러 - 노드 추가 실패: 이미 같은 값이 있습니다. 입력 값: " << data << "\n";
-		return false;
-	}
-
-	// 노드 생성 후 결과 반환
-	return Insert(CreateNode(data, Color::Red));
 }
 
 bool RedBlackTree::FindRecursive(Node* node, Node** outNode, int data)
@@ -77,6 +64,26 @@ bool RedBlackTree::FindRecursive(Node* node, Node** outNode, int data)
 	{
 		return FindRecursive(node->Right(), outNode, data);
 	}
+}
+
+void RedBlackTree::Print(int depth, int blackCount)
+{
+	PrintRecursive(root, depth, blackCount);
+}
+
+bool RedBlackTree::Insert(int data)
+{
+	// 먼저 중복되는 데이터가 있는지 확인
+	Node* node = nullptr;
+	if (Find(data, &node))
+	{
+		std::cout << "에러 - 노드 추가 실패: 이미 같은 값이 있습니다. 입력 값: " << data << "\n";
+		return false;
+	}
+
+	// 노드 생성 후 결과 반환
+	Insert(CreateNode(data, Color::Red));
+	return true;
 }
 
 void RedBlackTree::Insert(Node* newNode)
@@ -211,6 +218,140 @@ void RedBlackTree::RestructureAfterInsert(Node* newNode)
 	root->SetColor(Color::Black);
 }
 
+void RedBlackTree::RestructureAfterRemove(Node* node)
+{
+	// 더블 블랙 문제 해결
+	while (node->Parent() != nullptr && node->GetColor() == Color::Black)
+	{
+		// 형제 노드 구하기
+		if (node == node->Parent()->Left())
+		{
+			Node* sibling = node->Parent()->Right();
+			if (sibling == nil)
+			{
+				break;
+			}
+
+			// Case 1: 형제 노드가 빨간색인 경우
+			// 해결: 형제 노드를 Black으로 변경하고,
+			// 부모를 Red로 바꾼 후 부모 기준으로 좌회전 또는 우회전
+			if (sibling->GetColor() == Color::Red)
+			{
+				sibling->SetColor(Color::Black);
+				node->Parent()->SetColor(Color::Red);
+
+				// 좌회전.
+				RotateToLeft(node->Parent());
+				continue;
+			}
+
+			// Case 2: 형제 노드가 검정색인 경우
+			// 해결: 형제 노드를 Red로 변경하여 Black Height를 줄이고,
+			// 부모를 새로운 노드로 설정 후 다시 검사
+			if (sibling->Left()->GetColor() == Color::Black
+				&& sibling->Right()->GetColor() == Color::Black)
+			{
+				sibling->SetColor(Color::Red);
+				node = node->Parent();
+				continue;
+			}
+
+			// Case 3: 형제 노드가 검정색이고, 형제 노드의 왼쪽 자식이 빨간색인 경우
+			// 해결: 형제의 왼쪽 자식을 Black으로 변경,
+			// 형제를 Red로 변경 후 형제 기준 우회전
+			if (sibling->Left()->GetColor() == Color::Red)
+			{
+				sibling->Left()->SetColor(Color::Black);
+				sibling->SetColor(Color::Red);
+
+				// 우회전
+				RotateToRight(sibling);
+
+				// 회전 후 형제 위치 업데이트
+				sibling = node->Parent()->Right();
+			}
+
+			// Case 4: 형제 노드가 검정색이고, 형제 노드의 오른쪽 자식이 빨간색인 경우
+			// 해결: 형제를 부모와 같은 색으로 설정,
+			// 부모를 Black으로 변경,
+			// 형제의 오른쪽 자식을 Black으로 변경 후 부모 기준 좌회전
+			if (sibling->Right()->GetColor() == Color::Red)
+			{
+				sibling->SetColor(sibling->Parent()->GetColor());
+				sibling->Parent()->SetColor(Color::Black);
+				sibling->Right()->SetColor(Color::Black);
+				RotateToLeft(node->Parent());
+			}
+
+			continue;
+		}
+
+		// 형제 노드 구하기
+		if (node == node->Parent()->Right())
+		{
+			Node* sibling = node->Parent()->Left();
+			if (sibling == nil)
+			{
+				break;
+			}
+
+			// Case 1: 형제 노드가 빨간색인 경우
+			// 해결: 형제 노드를 Black으로 변경하고,
+			// 부모를 Red로 바꾼 후 부모 기준으로 좌회전 또는 우회전
+			if (sibling->GetColor() == Color::Red)
+			{
+				sibling->SetColor(Color::Black);
+				node->Parent()->SetColor(Color::Red);
+
+				// 우회전.
+				RotateToRight(node->Parent());
+				continue;
+			}
+
+			// Case 2: 형제 노드가 검정색인 경우
+			// 해결: 형제 노드를 Red로 변경하여 Black Height를 줄이고,
+			// 부모를 새로운 노드로 설정 후 다시 검사
+			if (sibling->Left()->GetColor() == Color::Black
+				&& sibling->Right()->GetColor() == Color::Black)
+			{
+				sibling->SetColor(Color::Red);
+				node = node->Parent();
+				continue;
+			}
+
+			// Case 3: 형제 노드가 검정색이고, 형제 노드의 왼쪽 자식이 빨간색인 경우
+			// 해결: 형제의 오른쪽 자식을 Black으로 변경,
+			// 형제를 Red로 변경 후 형제 기준 좌회전
+			if (sibling->Right()->GetColor() == Color::Red)
+			{
+				sibling->Right()->SetColor(Color::Black);
+				sibling->SetColor(Color::Red);
+
+				// 좌회전
+				RotateToLeft(sibling);
+
+				// 회전 후 형제 위치 업데이트
+				sibling = node->Parent()->Left();
+			}
+
+			// Case4: 형제 노드는 검정색이고, 형제의 왼쪽 자식은 빨간색인 경우
+			// 해결: 형제를 부모와 같은 색으로 설정,
+			// 부모를 Black으로 변경,
+			// 형제의 왼쪽 자식을 Black으로 변경 후 부모 기준 우회전
+			if (sibling->Left()->GetColor() == Color::Red)
+			{
+				sibling->SetColor(sibling->Parent()->GetColor());
+				sibling->Parent()->SetColor(Color::Black);
+				sibling->Left()->SetColor(Color::Black);
+				RotateToRight(node->Parent());
+			}
+		}
+
+		// 루트 노드는 검정색
+		root->SetColor(Color::Black);
+	}
+}
+
 void RedBlackTree::RotateToLeft(Node* node)
 {
 	// 오른쪽 자식 노드
@@ -291,4 +432,223 @@ void RedBlackTree::RotateToRight(Node* node)
 	// 좌회전 마무리
 	left->SetRight(node);
 	node->SetParent(left);
+}
+
+Node* RedBlackTree::FindMinRecursive(Node* node)
+{
+	// 탈출 조건
+	if (node == nil)
+	{
+		return nullptr;
+	}
+
+	// 왼쪽 하위 노드가 더 이상 없으면 현재 노드 반환
+	if (node->Left() == nil)
+	{
+		return node;
+	}
+
+	return FindMinRecursive(node->Left());
+}
+
+Node* RedBlackTree::FindMaxRecursive(Node* node)
+{
+	// 탈출 조건
+	if (node == nil)
+	{
+		return nullptr;
+	}
+
+	// 오른쪽 하위 노드가 더 이상 없으면 현재 노드 반환
+	if (node->Right() == nil)
+	{
+		return node;
+	}
+
+	return FindMaxRecursive(node->Right());
+}
+
+void RedBlackTree::Remove(int data)
+{
+	// 삭제할 노드 검색에 실패하면 삭제 실패
+	Node* deleted = nullptr;
+	if (!Find(data, &deleted))
+	{
+		std::cout
+			<< "에러: 노드 삭제 실패. 삭제할 노드를 찾지 못했습니다 (검색 값: "
+			<< data << ").\n";
+		return;
+	}
+
+	// 삭제 진행
+	RemoveImpl(deleted);
+}
+
+void RedBlackTree::RemoveImpl(Node* node)
+{
+	// 삭제 대상 노드
+	Node* removed = nullptr;
+
+	// 삭제할 위치의 대체 노드
+	Node* trail = nil;
+
+	Node* target = node;
+
+	// 자손이 하나 이하인 경우
+	if (target->Left() == nil || target->Right() == nil)
+	{
+		removed = target;
+	}
+	// 자손이 모두 있는 경우
+	else
+	{
+		// 대체할 노드 검색
+		// (왼쪽 하위 트리에서 가장 큰 값을 대체 노드로 설정)
+		removed = FindMaxRecursive(target->Left());
+
+		// 현재 노드의 값을 대상 노드의 값으로 변경
+		target->SetData(removed->Data());
+	}
+
+	// 자손이 하나만 있는 경우
+	if (node->Left() != nil && node->Right() == nil)
+	{
+		trail = node->Left();
+	}
+	else if (node->Right() != nil && node->Left() == nil)
+	{
+		trail = node->Right();
+	}
+
+	// 대상 노드가 있는 경우.
+	if (trail != nil)
+	{
+		trail->SetParent(removed->Parent());
+	}
+
+	// removed 노드가 root인 경우
+	if (removed->Parent() == nullptr)
+	{
+		root = trail;
+	}
+	// root가 아닌 경우
+	else
+	{
+		// trail 노드를 removed의 원래 위치로 설정
+		if (removed == removed->Parent()->Left())
+		{
+			removed->Parent()->SetLeft(trail);
+		}
+		else
+		{
+			removed->Parent()->SetRight(trail);
+		}
+	}
+
+	// 재정렬 여부 확인 후 진행
+	if (removed->GetColor() == Color::Black && trail != nil)
+	{
+		// 재정렬 진행
+	}
+
+	// 노드 삭제
+	SafeDelete(removed);
+}
+
+void RedBlackTree::DestroyRecursive(Node* node)
+{
+	// 재귀 탈출 조건
+	if (node == nil)
+	{
+		return;
+	}
+
+	// 자식이 있는 경우
+	DestroyRecursive(node->Left());
+	DestroyRecursive(node->Right());
+
+	// 노드 삭제
+	SafeDelete(node);
+}
+
+void RedBlackTree::PrintRecursive(Node* node, int depth, int blackCount)
+{
+	// 탈출 조건
+	if (node == nil)
+	{
+		return;
+	}
+
+	// 노드가 색상이 검정이면 blackCount 증가
+	if (node->GetColor() == Color::Black)
+	{
+		++blackCount;
+	}
+
+	// 부모 표기 문자열 설정
+	int parentData = 0;
+	const char* position = "Root";
+
+	// 부모 노드가 있는지 확인
+	if (node->Parent())
+	{
+		// 부모 노드의 데이터 저장
+		parentData = node->Parent()->Data();
+
+		// 부모 노드로부터 현재 노드의 위치 설정
+		if (node == node->Parent()->Left())
+		{
+			position = "Left";
+		}
+		else
+		{
+			position = "Right";
+		}
+	}
+
+	// 검은색 수 출력을 위한 문자열
+	char blackCountString[50] = { };
+
+	// 자손이 없으면 현재까지의 검은색 노드 수 설정
+	if (node->Left() == nil && node->Right() == nil)
+	{
+		sprintf_s(blackCountString, "------ %d", blackCount);
+	}
+
+	// Depth 출력
+	for (int ix = 0; ix < depth; ++ix)
+	{
+		std::cout << "  ";
+	}
+
+	// 노드 색상에 따른 콘솔 설정
+	if (node->GetColor() == Color::Red)
+	{
+		SetTextColor(TextColor::Red);
+	}
+	else
+	{
+		SetTextColor(TextColor::White);
+	}
+
+	// 현재 노드 값 출력
+	std::cout
+		<< node->Data() << " "
+		<< node->ColorString() << " ["
+		<< position << ", "
+		<< parentData << "] "
+		<< blackCountString << "\n";
+
+	// 노드를 출력한 뒤에는 콘솔 복구
+	SetTextColor(TextColor::White);
+
+	// 하위 노드
+	PrintRecursive(node->Left(), depth + 1, blackCount);
+	PrintRecursive(node->Right(), depth + 1, blackCount);
+}
+
+void SetTextColor(TextColor color)
+{
+	static HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(console, (int)color);
 }

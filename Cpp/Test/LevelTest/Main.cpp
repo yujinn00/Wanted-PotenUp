@@ -288,15 +288,24 @@
 //}
 #pragma endregion
 
-#include <iostream>
-#include <string>
+class Test
+{
+public:
+	Test* operator=(const Test& other)
+	{
+		if (this != &other)
+		{
+			data = other.data;
+		}
+		return this;
+	}
+
+private:
+	int data;
+};
 
 int main()
 {
-	int n;
-	std::cin >> n;
-
-
-
-	return 0;
+	Test a, b, c;
+	a = *(b = c); // 컴파일 에러: b = c의 결과를 a로 대입하는 순간 발생
 }

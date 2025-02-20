@@ -348,7 +348,7 @@ void RedBlackTree::RestructureAfterRemove(Node* node)
 		}
 
 		// 루트 노드는 검정색
-		root->SetColor(Color::Black);
+		node->SetColor(Color::Black);
 	}
 }
 

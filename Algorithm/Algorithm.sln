@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "9.RBT", "9.RBT\9.RBT.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.AStarPathFinding", "10.AstarPathFinding\10.AstarPathFinding.vcxproj", "{99EF05ED-10B8-425E-B628-FD36CFD0E399}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11.QuadTree", "11.QuadTree\11.QuadTree.vcxproj", "{2735F600-D3B0-45F0-A405-6882EBF2ABD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -111,6 +113,14 @@ Global
 		{99EF05ED-10B8-425E-B628-FD36CFD0E399}.Release|x64.Build.0 = Release|x64
 		{99EF05ED-10B8-425E-B628-FD36CFD0E399}.Release|x86.ActiveCfg = Release|Win32
 		{99EF05ED-10B8-425E-B628-FD36CFD0E399}.Release|x86.Build.0 = Release|Win32
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Debug|x64.ActiveCfg = Debug|x64
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Debug|x64.Build.0 = Debug|x64
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Debug|x86.ActiveCfg = Debug|Win32
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Debug|x86.Build.0 = Debug|Win32
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Release|x64.ActiveCfg = Release|x64
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Release|x64.Build.0 = Release|x64
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Release|x86.ActiveCfg = Release|Win32
+		{2735F600-D3B0-45F0-A405-6882EBF2ABD4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

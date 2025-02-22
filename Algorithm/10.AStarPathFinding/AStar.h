@@ -22,8 +22,8 @@ private:
 	struct Direction
 	{
 		// 방향.
-		int x = 0;
-		int y = 0;
+		float x = 0.0f;
+		float y = 0.0f;
 
 		// 비용
 		float cost = 0.0f;
@@ -34,6 +34,7 @@ public:
 	~AStar();
 
 	// 경로 검색 함수.
+	// grid: 각 노드가 이동 가능한지 여부 (0: 이동 가능, 1: 이동 불가, 2: 이동 경로 표시)
 	std::vector<Node*> FindPath(
 		Node* startNode,
 		Node* goalNode,

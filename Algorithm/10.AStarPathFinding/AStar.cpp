@@ -36,13 +36,13 @@ std::vector<Node*> AStar::FindPath(Node* startNode, Node* goalNode, const std::v
 	std::vector<Direction> directions =
 	{
 		// 하상우좌 이동.
-		// { x, y, 비용 }.
-		{ 0, 1, 1.0f }, { 0, -1, 1.0f }, { 1, 0, 1.0f }, { -1, 0, 1.0f },
+		// { x, y, cost }.
+		{ 0.0f, 1.0f, 1.0f }, { 0.0f, -1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f }, { -1.0f, 0.0f, 1.0f },
 
 		// 대각선 이동.
 		// 우측 하단, 우측 상단, 좌측 하단, 좌측 상단.
 		// 1.414f = sqrt(2).
-		{ 1, 1, 1.414f }, { 1, -1, 1.414f }, { -1, 1, 1.414f }, { -1, -1, 1.414f }
+		{ 1.0f, 1.0f, 1.414f }, { 1.0f, -1.0f, 1.414f }, { -1.0f, 1.0f, 1.414f }, { -1.0f, -1.0f, 1.414f }
 	};
 
 	// 이웃 노드 탐색 (열린 리스트가 비어 있지 않으면 반복).
@@ -78,6 +78,9 @@ std::vector<Node*> AStar::FindPath(Node* startNode, Node* goalNode, const std::v
 			// 아니면 그냥 *openList[ix]->positon으로 바로 비교해도 됨.
 			if (*openList[ix] == *currentNode)
 			{
+				// begin() 함수는 iterator를 필요로 함.
+				// 즉, 벡터의 요소를 가져오는 openList[ix]가 아닌,
+				// 해당 요소의 위치를 가져오는 openList.begin() + ix를 사용해야 함.
 				openList.erase(openList.begin() + ix);
 				break;
 			}
@@ -119,7 +122,8 @@ std::vector<Node*> AStar::FindPath(Node* startNode, Node* goalNode, const std::v
 			}
 
 			// 이동할 위치가 장애물이면 무시.
-			// Y부터, 그 다음 X.
+			// grid는 Y부터, 그 다음 X.
+			// 이유: 좌표 개념은 (x, y)지만, 2D 벡터는 (y, x) 순서로 접근해야 함.
 			if (grid[newY][newX] == 1)
 			{
 				continue;
@@ -158,9 +162,9 @@ std::vector<Node*> AStar::FindPath(Node* startNode, Node* goalNode, const std::v
 			{
 				openList.emplace_back(neighborNode);
 			}
+			// 리스트 추가 대상이 아니라면, 메모리 해제.
 			else
 			{
-				// 리스트 추가 대상이 아니라면, 메모리 해제.
 				SafeDelete(neighborNode);
 			}
 		}

@@ -5,13 +5,13 @@
 #include "Node.h"
 
 // 쿼드 트리 클래스.
-class QuadTree
+class QuadTree  
 {
 public:
     QuadTree(const Bounds& bounds);
     ~QuadTree();
 
-    // 쿼트 트리에 점을 추가할 때 사용하는 함수.
+    // 쿼드 트리에 점을 추가할 때 사용하는 함수.
     // 내부에서는 루트 노드에서부터 재귀적으로 추가.
     void Insert(Node* node);
 

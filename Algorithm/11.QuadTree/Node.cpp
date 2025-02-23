@@ -53,7 +53,8 @@ void Node::Insert(Node* node)
     }
 }
 
-// 재귀를 통해, 참조로 받은 possibleNodes를 계속해서 갱신
+// 재귀를 통해, 참조로 받은 possibleNodes를 계속해서 갱신.
+// 참고) Node 클래스의 Query 함수는 겹칠 가능성이 있는 노드들을 먼저 탐색하여 결과 리스트에 추가하는 함수.
 void Node::Query(const Bounds& queryBounds, std::vector<Node*>& possibleNodes)
 {
     // 현재 노드 추가.
@@ -118,6 +119,7 @@ bool Node::Subdivide()
 bool Node::IsDivided()
 {
     // 사분면의 자식 객체가 널 값인지 확인.
+    // topLeft만 확인해도 나머지 3개의 노드도 존재한다고 간주할 수 있음.
     return topLeft != nullptr;
 }
 
@@ -189,6 +191,9 @@ std::vector<NodeIndex> Node::GetQuads(const Bounds& bounds)
     float centerX = x + halfWidth;
     float centerY = y + halfHeight;
 
+    // 아래 네 가지 경우, 꽤 어려웠음 => 직접 그려서 확인함.
+    // 최소와 최대를 잘 설정하면, 겹치는지 확인이 가능함.
+    // 진짜 어려웠으니 .. 잘 기억하면 좋겠다.
     // 왼쪽 영역에 겹치는지 확인.
     bool left = bounds.X() < centerX && bounds.MaxX() >= x;
 

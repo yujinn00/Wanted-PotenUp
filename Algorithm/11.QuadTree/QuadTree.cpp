@@ -17,6 +17,7 @@ void QuadTree::Insert(Node* node)
     root->Insert(node);
 }
 
+// 참고) QuadTree 클래스의 Query 함수는 겹칠 가능성이 있는 노드들 중 실제로 겹치는 노드들을 탐색하는 함수.
 std::vector<Node*> QuadTree::Query(Node* queryNode)
 {
     // 겹침 가능성이 있는 영역 확인.

@@ -19,7 +19,7 @@ public:
     float MaxX() const { return x + width; }
     float MaxY() const { return y + height; }
 
-    // 다른 사각형과 겹치는지 확인.
+    // 다른 사각형과 교차하는지 확인.
     bool Intersects(const Bounds& other) const;
 
     // Setter.
